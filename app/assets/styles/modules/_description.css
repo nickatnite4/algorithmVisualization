@@ -1,0 +1,15 @@
+.description {
+  font-size: 1.1rem;
+  padding: 0;
+  margin: 10px 0;
+
+  &__title {
+    font-size: 2.5rem;
+    text-align: center;
+  }
+
+  &__subtitle {
+    line-height: 1.9;
+    font-weight: 300;
+  }
+}

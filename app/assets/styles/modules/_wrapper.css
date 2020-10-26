@@ -1,0 +1,9 @@
+.wrapper {
+  padding: 0 20px;
+
+  @mixin atMedium {
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

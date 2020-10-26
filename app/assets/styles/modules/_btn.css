@@ -1,0 +1,13 @@
+.btn {
+  margin-top: 20px;
+  width: 100%;
+  border: none;
+  text-decoration: none;
+  padding: 10px 0;
+  cursor: pointer;
+  background-color: $mainGreen;
+
+  &:hover {
+    background-color: #64cc68;
+  }
+}
