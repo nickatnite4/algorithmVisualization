@@ -9,15 +9,40 @@ class AlgorithmContainer {
     this.activeWidth;
     this.spacingBetweenEachElement = 0;
     this.elements = [];
+
     this.events();
   }
 
   events() {
     this.userController.updateAll();
     window.addEventListener("resize", () => this.updateContainerWidth());
-    this.userController.playBtn.addEventListener("click", () =>
-      this.createVisualization()
-    );
+    this.userController.playBtn.addEventListener("click", () => {
+      this.createVisualization();
+      this.bubbleSort();
+    });
+  }
+
+  bubbleSort() {
+    console.log(this.elements);
+    if (this.elements[0].height > this.elements[1].height) {
+      console.log("if function called.");
+      this.swap();
+    }
+  }
+
+  swap() {
+    console.log("swap function called.");
+    this.allElementDivsInHTML = document.querySelectorAll(".element");
+
+    let moveElements = setInterval(() => {
+      console.log("move elements has been called");
+      if (this.elements[0].x_position === 520) {
+        clearInterval(moveElements);
+      }
+      this.elements[0].x_position++;
+      this.allElementDivsInHTML[0].style.left = this.elements[0].x_position;
+      console.log(this.elements[0].x_position);
+    }, 200);
   }
 
   updateContainerWidth() {
@@ -66,13 +91,11 @@ class AlgorithmContainer {
   }
 
   addElementsToContainer() {
+    console.log(this.elements);
     this.elements.map(el => {
-      let item = document.createElement("div");
-      item.classList.add("element");
-      item.style.left = el.getXposition() + "px";
-      item.style.height = el.getHeight() + "px";
-      this.container.appendChild(item);
+      this.container.appendChild(el.createElementDiv());
     });
+    this.elementChildren = document.querySelectorAll(".element");
   }
 }
 
