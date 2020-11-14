@@ -3,6 +3,7 @@ class Element {
     this.height = h;
     this.width = 20;
     this.x_position = x;
+    this.backgroundColor = "black";
     this.createElementDiv();
   }
 
@@ -12,6 +13,7 @@ class Element {
     this.elementDiv.style.left = this.x_position + "px";
     this.elementDiv.style.height = this.height + "px";
     this.elementDiv.style.width = 20 + "px";
+    this.elementDiv.style.backgroundColor = this.backgroundColor;
     return this.elementDiv;
   }
 }

@@ -5,6 +5,10 @@
   background: #333;
   outline: none;
 
+  &__reverse {
+    direction: rtl;
+  }
+
   &::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;

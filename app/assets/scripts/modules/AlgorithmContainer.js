@@ -18,31 +18,125 @@ class AlgorithmContainer {
     window.addEventListener("resize", () => this.updateContainerWidth());
     this.userController.playBtn.addEventListener("click", () => {
       this.createVisualization();
-      this.bubbleSort();
+      if (this.userController.algorithm === "bubble-sort") {
+        this.bubbleSort();
+      }
+      if (this.userController.algorithm === "selection-sort") {
+        this.selectionSort();
+      }
     });
   }
 
-  bubbleSort() {
-    console.log(this.elements);
-    if (this.elements[0].height > this.elements[1].height) {
-      console.log("if function called.");
-      this.swap();
+  async selectionSort() {
+    this.userController.playBtn.disabled = true;
+    for (let i = 0; i < this.userController.numItems - 1; i++) {
+      let min_idx = i;
+      for (let j = i + 1; j < this.userController.numItems; j++) {
+        if (this.elements[j].height < this.elements[min_idx].height) {
+          min_idx = j;
+        }
+      }
+      await this.swapSelection(min_idx, i);
     }
+    this.userController.playBtn.disabled = false;
   }
 
-  swap() {
-    console.log("swap function called.");
-    this.allElementDivsInHTML = document.querySelectorAll(".element");
+  swapSelection(min_idx, i) {
+    return new Promise((resolve, reject) => {
+      let target1 = this.elements[i].x_position;
+      let target2 = this.elements[min_idx].x_position;
+      let isComplete1 = false;
+      let isComplete2 = false;
 
-    let moveElements = setInterval(() => {
-      console.log("move elements has been called");
-      if (this.elements[0].x_position === 520) {
-        clearInterval(moveElements);
+      // Set selected elements background color
+      this.elements[i].backgroundColor = "purple";
+      this.elements[min_idx].backgroundColor = "purple";
+
+      let moveElements = setInterval(() => {
+        if (this.elements[i].x_position === target2) {
+          isComplete1 = true;
+        } else {
+          this.elements[i].x_position++;
+          this.removeElementsFromContainer();
+          this.addElementsToContainer();
+        }
+
+        if (this.elements[min_idx].x_position === target1) {
+          isComplete2 = true;
+        } else {
+          this.elements[min_idx].x_position--;
+          this.removeElementsFromContainer();
+          this.addElementsToContainer();
+        }
+
+        if (isComplete1 && isComplete2) {
+          isComplete1 = false;
+          isComplete2 = false;
+          this.elements[i].backgroundColor = "black";
+          this.elements[min_idx].backgroundColor = "black";
+          let temp = this.elements[i];
+          this.elements[i] = this.elements[min_idx];
+          this.elements[min_idx] = temp;
+          resolve(clearInterval(moveElements));
+        }
+      }, this.userController.speed);
+    });
+  }
+
+  async bubbleSort() {
+    let i, j;
+    this.userController.playBtn.disabled = true;
+    for (i = 0; i < this.userController.numItems - 1; i++) {
+      for (j = 0; j < this.userController.numItems - i - 1; j++) {
+        if (this.elements[j].height > this.elements[j + 1].height) {
+          await this.swap(j);
+        }
       }
-      this.elements[0].x_position++;
-      this.allElementDivsInHTML[0].style.left = this.elements[0].x_position;
-      console.log(this.elements[0].x_position);
-    }, 200);
+    }
+    console.log(this.elements);
+    this.userController.playBtn.disabled = false;
+  }
+
+  swap(j) {
+    return new Promise((resolve, reject) => {
+      let target1 = this.elements[j].x_position;
+      let target2 = this.elements[j + 1].x_position;
+      let isComplete1 = false;
+      let isComplete2 = false;
+
+      // Set selected elements background color
+      this.elements[j].backgroundColor = "purple";
+      this.elements[j + 1].backgroundColor = "purple";
+
+      let moveElements = setInterval(() => {
+        if (this.elements[j].x_position === target2) {
+          isComplete1 = true;
+        } else {
+          this.elements[j].x_position++;
+          this.removeElementsFromContainer();
+          this.addElementsToContainer();
+        }
+
+        if (this.elements[j + 1].x_position === target1) {
+          isComplete2 = true;
+        } else {
+          this.elements[j + 1].x_position--;
+          this.removeElementsFromContainer();
+          this.addElementsToContainer();
+        }
+
+        if (isComplete1 && isComplete2) {
+          isComplete1 = false;
+          isComplete2 = false;
+          this.elements[j].backgroundColor = "black";
+          this.elements[j + 1].backgroundColor = "black";
+          let temp = this.elements[j];
+          this.elements[j] = this.elements[j + 1];
+          this.elements[j + 1] = temp;
+          resolve(clearInterval(moveElements));
+        }
+      }, this.userController.speed);
+    });
   }
 
   updateContainerWidth() {
@@ -91,7 +185,7 @@ class AlgorithmContainer {
   }
 
   addElementsToContainer() {
-    console.log(this.elements);
+    //console.log(this.elements);
     this.elements.map(el => {
       this.container.appendChild(el.createElementDiv());
     });

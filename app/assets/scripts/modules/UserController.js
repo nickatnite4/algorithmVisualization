@@ -29,6 +29,7 @@ class UserController {
 
   updateSpeed() {
     this.speed = document.querySelector("#speed").value;
+    console.log(this.speed);
   }
 
   updateAlgorithm() {
