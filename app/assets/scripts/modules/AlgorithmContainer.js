@@ -28,6 +28,8 @@ class AlgorithmContainer {
 
   async selectionSort() {
     this.userController.playBtn.disabled = true;
+    let rangeSlider = document.querySelector("#items");
+    rangeSlider.disabled = true;
     for (let i = 0; i < this.userController.numItems - 1; i++) {
       let min_idx = i;
       for (let j = i + 1; j < this.userController.numItems; j++) {
@@ -38,6 +40,7 @@ class AlgorithmContainer {
       await this.swapSelection(min_idx, i);
     }
     this.userController.playBtn.disabled = false;
+    rangeSlider.disabled = false;
   }
 
   swapSelection(min_idx, i) {
@@ -85,6 +88,8 @@ class AlgorithmContainer {
   async bubbleSort() {
     let i, j;
     this.userController.playBtn.disabled = true;
+    let rangeSlider = document.querySelector("#items");
+    rangeSlider.disabled = true;
     for (i = 0; i < this.userController.numItems - 1; i++) {
       for (j = 0; j < this.userController.numItems - i - 1; j++) {
         if (this.elements[j].height > this.elements[j + 1].height) {
@@ -94,6 +99,7 @@ class AlgorithmContainer {
     }
     console.log(this.elements);
     this.userController.playBtn.disabled = false;
+    rangeSlider.disabled = false;
   }
 
   swap(j) {
