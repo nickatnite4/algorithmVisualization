@@ -9,7 +9,6 @@ class AlgorithmContainer {
     this.activeWidth;
     this.spacingBetweenEachElement = 0;
     this.elements = [];
-
     this.events();
   }
 
@@ -177,7 +176,7 @@ class AlgorithmContainer {
 
   createElements() {
     for (let i = 0; i < this.userController.numItems; i++) {
-      let h = Math.random() * 301;
+      let h = Math.random() * 401;
       let position =
         Math.floor(this.spacingBetweenEachElement) * (i + 1) + 20 * (i + 0);
       this.elements.push(new Element(Math.floor(h), position));
